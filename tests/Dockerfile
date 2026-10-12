@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl \
 
 RUN pip install --no-cache-dir pytest==8.4.1 pytest-json-ctrf==0.3.5
 
-COPY ./tests/ /app/tests/
+COPY ./tests/ /tests/
 RUN mkdir -p /app/output
 
-RUN chmod 600 /app/tests/ground_truth.json
+RUN chmod 600 /tests/ground_truth.json
