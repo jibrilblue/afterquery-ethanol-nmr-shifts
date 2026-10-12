@@ -4,14 +4,14 @@ imperfect, and the resulting DMC energy is biased relative to the exact
 non-relativistic limit. Your task is to quantify that bias by running
 fixed-node DMC with two different trial wavefunctions.
 
-## The system
+**The system**
 
 The molecule is CO at the experimental bond length of 1.128 Angstrom, with the
 carbon at the origin and the oxygen on the positive z axis. The RHF orbitals are
 provided in a PySCF checkpoint file at `/app/data/co_rhf.chk`. The basis set is
 cc-pVDZ.
 
-## The calculation
+**The calculation**
 
 All calculations use PyQMC, the real-space QMC module in PySCF.
 
@@ -35,7 +35,7 @@ orbitals of CO (CAS(2,2)). Report the DMC energy from this multi-reference
 trial and the difference between the two DMC energies. That difference is
 your estimate of the fixed-node error.
 
-## What to produce
+**What to produce**
 
 Write `/app/output/dmc.json`:
 
@@ -65,7 +65,7 @@ multi-reference CAS(2,2) trial, in Hartree.
 converted to kcal/mol.
 - `notes` is free text and is not graded.
 
-## How your answer is judged
+**How your answer is judged**
 
 An automated check compares your numbers against a reference computed
 independently on the same checkpoint file with the same PyQMC version. Absolute
