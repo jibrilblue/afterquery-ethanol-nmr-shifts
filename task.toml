@@ -3,7 +3,7 @@ schema_version = "1.4"
 artifacts = ["/app/output/dmc.json"]
 
 [task]
-name = "afterquery/fixed-node-dmc-nodal-quality"
+name = "afterquery/fixed-node-dmc"
 description = "Optimize a Slater-Jastrow trial wavefunction for CO, run VMC and fixed-node DMC, and quantify the fixed-node error by comparing single-reference and multi-reference trial wavefunctions."
 authors = [{ name = "Jibril Suleiman Lere", email = "jibrilesslere@gmail.com" }]
 keywords = ["quantum Monte Carlo", "diffusion Monte Carlo", "fixed-node error", "Jastrow factor", "electronic structure"]
