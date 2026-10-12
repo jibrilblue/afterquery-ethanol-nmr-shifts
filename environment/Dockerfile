@@ -19,5 +19,3 @@ pyqmc==0.5.0
 
 RUN mkdir -p /app/output /app/work
 WORKDIR /app
-
-COPY data/ /app/data/
