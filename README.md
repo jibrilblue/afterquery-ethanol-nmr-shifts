@@ -1,5 +1,5 @@
-# afterquery-fixed-mode-dmc-nodal-quality
-AfterQuery task: fixed-node DMC nodal quality benchmark - VMC + DMC on CO with single- and multi- reference Slater-Jastrow trials- 
+# fixed-mode-dmc-nodal-quality
+task: fixed-node DMC nodal quality benchmark - VMC + DMC on CO with single- and multi- reference Slater-Jastrow trials- 
 ## Difficulty
 Author-generated RHF checkpoint for CO at 1.128 Å in cc-pVDZ. Difficulty comes
 from four dependent stages that each fail silently: Jastrow optimization (a
