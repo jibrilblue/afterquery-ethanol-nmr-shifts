@@ -1,5 +1,3 @@
-# Fixed-node error in the DMC energy of carbon monoxide
-
 Carbon monoxide is a classic test case for the fixed-node approximation in
 diffusion Monte Carlo: the nodes of a single-determinant trial wavefunction are
 imperfect, and the resulting DMC energy is biased relative to the exact
