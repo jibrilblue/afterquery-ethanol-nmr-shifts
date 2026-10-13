@@ -1,0 +1,6 @@
+pyscf==2.8.0
+pyqmc==0.8.1
+numpy==1.26.4
+scipy==1.13.1
+h5py==3.11.0
+pandas==2.2.2
