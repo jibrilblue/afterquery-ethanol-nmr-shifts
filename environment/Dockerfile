@@ -11,11 +11,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-RUN pip install --no-cache-dir \
-pyscf==2.6.2 \
-pyqmc==0.8.1 \
-numpy==1.26.4 \
-scipy==1.13.1 \
-h5py==3.11.0
-
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 RUN mkdir -p /app/output
