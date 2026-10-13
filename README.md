@@ -1,13 +1,10 @@
 # fixed-mode-dmc-nodal-quality
-task: fixed-node DMC nodal quality benchmark - VMC + DMC on CO with single- and multi- reference Slater-Jastrow trials- 
+task: Fixed-node DMC nodal quality benchmark for N2 — VMC + DMC with single- and multi-reference Slater-Jastrow trials. 
 ## Difficulty
-Author-generated RHF checkpoint for CO at 1.128 Å in cc-pVDZ. Difficulty comes
-from four dependent stages that each fail silently: Jastrow optimization (a
-poor optimization biases both VMC and DMC), VMC equilibration (insufficient
-equilibration leaves walkers out of equilibrium), DMC branching (a time step
-that is too large introduces bias, one that is too small requires prohibitive
-run times), and the fixed-node error estimate (which requires a separate
-multi-reference calculation). Expert time: ~8 h.
+Author-generated RHF checkpoint for N2 at 1.098 A in cc-pVDZ. Difficulty comes from four dependent stages that each fail silently: Jastrow optimization (a poor optimization biases both VMC and DMC), VMC equilibration (insufficient equilibration leaves walkers out of equilibrium), DMC branching (a time step that is too large introduces bias, one that is too small requires prohibitive run times), and the fixed-node error estimate (which requires a separate multi-reference calculation).
+
+## Author
+Jibril Suleiman Lere (ORCID: 0009-0007-1405-2206)
 
 ## Reference solution
 `solution/solve.sh` loads the RHF checkpoint, builds a Slater-Jastrow trial
