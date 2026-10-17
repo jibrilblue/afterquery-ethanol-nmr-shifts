@@ -1,24 +1,19 @@
-# fixed-mode-dmc-nodal-quality
-task: Fixed-node DMC nodal quality benchmark for N2 — VMC + DMC with single- and multi-reference Slater-Jastrow trials. 
+# H2O VMC Correlation Energy
+
+Calculate the correlation energy recovered by a two-body Slater-Jastrow Variational Monte Carlo (VMC) simulation for the H2O molecule.
+
 ## Difficulty
-Author-generated RHF checkpoint for N2 at 1.098 A in cc-pVDZ. Difficulty comes from four dependent stages that each fail silently: Jastrow optimization (a poor optimization biases both VMC and DMC), VMC equilibration (insufficient equilibration leaves walkers out of equilibrium), DMC branching (a time step that is too large introduces bias, one that is too small requires prohibitive run times), and the fixed-node error estimate (which requires a separate multi-reference calculation).
+
+The task requires the agent to set up a full QMC pipeline from scratch: run RHF, construct a Slater-Jastrow wavefunction, optimize the Jastrow parameters to recover correlation energy, and run a converged VMC simulation. The challenge lies in properly equilibrating the walkers, choosing sufficient sampling blocks, and ensuring the variational energy is strictly below the HF baseline without falling into statistical noise.
 
 ## Author
+
 Jibril Suleiman Lere (ORCID: 0009-0007-1405-2206)
 
 ## Reference solution
-`solution/solve.sh` loads the RHF checkpoint, builds a Slater-Jastrow trial
-wavefunction with PyQMC, optimizes the Jastrow parameters by VMC energy
-minimization, runs VMC and fixed-node DMC with the optimized trial, then builds
-a multi-reference CAS(2,2) trial, optimizes its Jastrow, and runs a second
-fixed-node DMC. The fixed-node error is the difference between the two DMC
-energies.
+
+`solution/solve.sh` loads the RHF checkpoint, builds a Slater-Jastrow trial wavefunction with PyQMC, optimizes the Jastrow parameters by VMC energy minimization, runs a converged VMC simulation, and calculates the correlation energy (E_vmc - E_hf).
 
 ## Verification
-`tests/test.sh` runs offline in a separate container against a baked-in
-`ground_truth.json` produced by the author's own high-precision PyQMC
-calculation. It checks the VMC and DMC energies, the multi-reference DMC
-energy, the fixed-node error, and the statistical errors. A guard fails any
-submission whose multi-reference DMC energy equals its single-reference DMC
-energy, catching a skipped CAS step. Binary reward, written to
-`/logs/verifier/reward.txt` on every code path.
+
+`tests/test.sh` runs offline in a separate container against a baked-in `ground_truth.json` produced by the author's own PyQMC calculation. It checks the correlation energy within a tight tolerance derived from the statistical error of the reference run. It also enforces the variational bound, ensuring the agent's VMC energy is strictly lower than the HF energy, preventing trivial cheating. Binary reward is written to `/logs/verifier/reward.txt`.
