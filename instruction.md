@@ -1,24 +1,21 @@
-**VMC Correlation Energy for Water**
+Compute the Gibbs free energy of activation and reaction at 298.15 K for the Diels-Alder reaction of s-cis-1,3-butadiene with ethylene, using M06-2X/def2-SVP in PySCF with geomeTRIC.
 
-You are provided with a water (H2O) molecule. Your goal is to calculate the correlation energy recovered by a Slater-Jastrow trial wavefunction using Variational Monte Carlo (VMC). 
+The agent is given only the reactant geometries (/app/data/butadiene.xyz, /app/data/ethylene.xyz). It must optimize the reactants and the cyclohexene product, locate the concerted transition state on its own, and confirm that the TS has exactly one imaginary frequency and connects reactants to product.
 
-**The system**
+**Definitions & Operationalization:**
+1. **ΔG_rxn:** Defined as G(cyclohexene) - [G(butadiene) + G(ethylene)].
+2. **ΔG‡:** Defined as G(TS) - [G(butadiene) + G(ethylene)].
+3. **TS Connectivity Check:** The agent must displace the TS geometry along the imaginary normal mode by ±0.2 Å, re-optimize both displaced geometries, and verify that one relaxation leads to the separated reactants (forming C-C distances > 3.0 Å) and the other leads to the product (forming C-C distances < 1.8 Å).
+4. **Thermochemistry:** Compute G(298.15 K) from the Hessians using Grimme’s quasi-RRHO treatment (cutoff 100 cm⁻¹) with the 1 atm → 1 M standard-state correction (+1.89 kcal/mol per molecule).
 
-The molecule is H2O at the experimental geometry: O at (0,0,0), H at (0, -0.757, 0.587), and H at (0, 0.757, 0.587) Angstroms. The basis set is cc-pVDZ. Set `np.random.seed(42)` at the start of your script to ensure reproducibility.
+All numerical settings are pinned: PySCF and geomeTRIC versions, grid (99,590) without pruning, conv_tol=1e-10, no symmetry, GAU_TIGHT optimizer convergence.
 
-**The calculation**
-
-1. Run a Restricted Hartree-Fock (RHF) calculation to obtain the baseline HF energy.
-2. Build a Slater-Jastrow trial wavefunction using PyQMC's default two-body Jastrow.
-3. Optimize the Jastrow parameters using VMC.
-4. Run a converged VMC simulation to obtain the final VMC energy. You must choose sufficient walkers and blocks to ensure your statistical error is small.
-5. Calculate the correlation energy: `E_corr = E_vmc - E_hf`. The VMC energy must be strictly lower than the HF energy.
-
-**Output format**
-
-Write your results to `/app/output/vmc.json`. The JSON file must contain exactly these three keys:
-- `hf_energy_hartree`: The baseline RHF energy.
-- `vmc_energy_hartree`: The optimized VMC energy.
-- `correlation_energy_hartree`: The difference between VMC and HF.
+**Output format:**
+Write your results to `/app/output/kepler.json`. The JSON file must contain exactly these keys:
+- `delta_G_activation_kcal_mol` (float)
+- `delta_G_reaction_kcal_mol` (float)
+- `imaginary_frequency_cm-1` (float)
+- `forming_CC_distances_angstrom` (list of two floats, representing the two new bonds in the TS)
+- `ts_geometry` (list of lists, e.g. `[["C", x, y, z], ...]`)
 
 You have 14400 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.
