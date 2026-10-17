@@ -21,4 +21,4 @@ Write your results to `/app/output/vmc.json`. The JSON file must contain exactly
 - `vmc_energy_hartree`: The optimized VMC energy.
 - `correlation_energy_hartree`: The difference between VMC and HF.
 
-- You have 14400 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.
+You have 14400 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.
