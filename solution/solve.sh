@@ -30,7 +30,7 @@ out = {
     ]
 }
 
-out_path = "/app/output/kepler.json" if os.path.exists("/app") else "kepler.json"
+out_path = "/app/output/thermo.json" if os.path.exists("/app") else "thermo.json"
 with open(out_path, "w") as f:
     json.dump(out, f, indent=2)
 
