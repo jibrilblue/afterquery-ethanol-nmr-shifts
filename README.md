@@ -1,10 +1,10 @@
-# H2O VMC Correlation Energy
+# Diels-Alder TS Thermochemistry
 
-Calculate the correlation energy recovered by a two-body Slater-Jastrow Variational Monte Carlo (VMC) simulation for the H2O molecule.
+Compute the Gibbs free energy of activation and reaction for the Diels-Alder reaction of s-cis-1,3-butadiene with ethylene using M06-2X/def2-SVP and PySCF.
 
 ## Difficulty
 
-The task requires the agent to set up a full QMC pipeline from scratch: run RHF, construct a Slater-Jastrow wavefunction, optimize the Jastrow parameters to recover correlation energy, and run a converged VMC simulation. The challenge lies in properly equilibrating the walkers, choosing sufficient sampling blocks, and ensuring the variational energy is strictly below the HF baseline without falling into statistical noise.
+The difficulty comes from a chain of expert decisions where each mistake silently shifts the answer by several kcal/mol: landing on a higher-order saddle or a non-concerted path, skipping quasi-RRHO corrections, omitting the standard-state correction, referencing a complex instead of the separated reactants, or using the wrong butadiene conformer.
 
 ## Author
 
@@ -12,8 +12,8 @@ Jibril Suleiman Lere (ORCID: 0009-0007-1405-2206)
 
 ## Reference solution
 
-`solution/solve.sh` loads the RHF checkpoint, builds a Slater-Jastrow trial wavefunction with PyQMC, optimizes the Jastrow parameters by VMC energy minimization, runs a converged VMC simulation, and calculates the correlation energy (E_vmc - E_hf).
+`solution/solve.sh` optimizes the reactants and the cyclohexene product, locates the concerted transition state, confirms it has exactly one imaginary frequency, computes G(298.15 K) using Grimme’s quasi-RRHO treatment, and calculates ΔG‡ and ΔG_rxn.
 
 ## Verification
 
-`tests/test.sh` runs offline in a separate container against a baked-in `ground_truth.json` produced by the author's own PyQMC calculation. It checks the correlation energy within a tight tolerance derived from the statistical error of the reference run. It also enforces the variational bound, ensuring the agent's VMC energy is strictly lower than the HF energy, preventing trivial cheating. Binary reward is written to `/logs/verifier/reward.txt`.
+`tests/test.sh` runs offline in a separate container against a baked-in `ground_truth.json`. The verifier checks ΔG‡ and ΔG_rxn within ±0.5 kcal/mol, the imaginary frequency within ±75 cm⁻¹, and the forming C-C distances within ±0.05 Å. Binary reward is written to `/logs/verifier/reward.txt`.
