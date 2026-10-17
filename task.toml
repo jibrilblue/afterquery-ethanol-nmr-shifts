@@ -1,12 +1,12 @@
 schema_version = "1.4"
 
-artifacts = ["/app/output/dmc.json"]
+artifacts = ["/app/output/vmc.json"]
 
 [task]
-name = "afterquery/nitrogen-dmc"
-description = "Optimize a Slater-Jastrow trial wavefunction for N2, run VMC and fixed-node DMC, and quantify the fixed-node error by comparing single-reference and multi-reference trial wavefunctions."
+name = "afterquery/h2o-vmc-correlation"
+description = "Calculate the correlation energy recovered by a two-body Slater-Jastrow Variational Monte Carlo (VMC) simulation for the H2O molecule."
 authors = [{ name = "Jibril Suleiman Lere", email = "jibrilesslere@gmail.com" }]
-keywords = ["quantum Monte Carlo", "diffusion Monte Carlo", "fixed-node error", "Jastrow factor", "electronic structure", "nitrogen"]
+keywords = ["quantum Monte Carlo", "VMC", "Jastrow factor", "correlation energy", "water"]
 
 [metadata]
 author_name = "Jibril Suleiman Lere"
@@ -21,12 +21,12 @@ field = "chemistry"
 subfield = "electronic structure and quantum Monte Carlo"
 category = "Science"
 subcategory = "Chemistry"
-tags = ["quantum Monte Carlo", "diffusion Monte Carlo", "fixed-node error", "Jastrow factor", "electronic structure", "PyQMC"]
-expert_time_estimate_hours = 8.0
-relevant_experience = "Six years of electronic structure research with a focus on real-space quantum Monte Carlo methods; I develop and apply Slater-Jastrow trial wavefunctions, run VMC and DMC calculations for small molecules, and analyze fixed-node errors in systems with strong static correlation."
-difficulty_explanation = "The checkpoint file is author-generated and the Jastrow parameters are specific to it, so the answer is not findable online. The task is hard because it requires four dependent stages that each fail silently: Jastrow optimization (a naive optimization produces a poor trial wavefunction and biases both VMC and DMC), VMC equilibration (insufficient equilibration leaves walkers in a non-equilibrium distribution), DMC branching (a time step that is too large introduces a bias, and one that is too small requires prohibitive run times), and the fixed-node error estimate (which requires a separate multi-reference calculation that agents often skip). No information an expert would obviously have is withheld, and every step is standard QMC practice."
-solution_explanation = "Load the RHF checkpoint with PySCF. Build a Slater-Jastrow trial wavefunction using PyQMC's default two-body Jastrow. Optimize the Jastrow parameters by VMC energy minimization with a sufficiently large sample. Run VMC with the optimized trial, equilibrate for a few thousand steps, and accumulate the energy. Run fixed-node DMC with a time step of 0.01 a.u., discarding the first 20 percent of steps for equilibration and accumulating the energy over the remainder. Build a multi-reference trial from a CAS(2,2) expansion, optimize its Jastrow, and run a second fixed-node DMC. Report all energies, the Jastrow parameters, the statistical errors, and the difference between the two DMC energies as the fixed-node error."
-verification_explanation = "The verifier runs offline in a separate container against a baked-in ground_truth.json holding the author's independently computed values on the same checkpoint file. Ground truth comes from the author's own high-precision PyQMC calculation, never from the reference solution. Absolute energies are compared with a tolerance that absorbs a constant offset from a different Jastrow parameterization; the fixed-node error is compared directly. Statistical errors are checked to be smaller than the reported differences. A solution that skips the multi-reference calculation fails the fixed-node error check."
+tags = ["quantum Monte Carlo", "VMC", "Jastrow factor", "correlation energy", "PyQMC"]
+expert_time_estimate_hours = 6.0
+relevant_experience = "Six years of electronic structure research with a focus on real-space quantum Monte Carlo methods; I develop and apply Slater-Jastrow trial wavefunctions and run VMC calculations for small molecules."
+difficulty_explanation = "The task requires the agent to set up a full QMC pipeline from scratch: run RHF, construct a Slater-Jastrow wavefunction, optimize the Jastrow parameters to recover correlation energy, and run a converged VMC simulation. The challenge lies in properly equilibrating the walkers, choosing sufficient sampling blocks, and ensuring the variational energy is strictly below the HF baseline without falling into statistical noise."
+solution_explanation = "Load the RHF checkpoint with PySCF. Build a Slater-Jastrow trial wavefunction using PyQMC's default two-body Jastrow. Optimize the Jastrow parameters. Run a converged VMC simulation with sufficient walkers and blocks. Compute the correlation energy as E_vmc - E_hf. Ensure the random seed is fixed for reproducibility."
+verification_explanation = "The verifier runs offline against a baked-in ground_truth.json. It checks the correlation energy within a tight tolerance derived from the statistical error of the reference run. It also enforces the variational bound, ensuring the agent's VMC energy is strictly lower than the HF energy, preventing trivial cheating."
 
 [verifier]
 timeout_sec = 1800.0
