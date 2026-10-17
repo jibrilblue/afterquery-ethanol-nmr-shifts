@@ -1,12 +1,12 @@
 schema_version = "1.4"
 
-artifacts = ["/app/output/vmc.json"]
+artifacts = ["/app/output/kepler.json"]
 
 [task]
-name = "afterquery/h2o-vmc-correlation"
-description = "Calculate the correlation energy recovered by a two-body Slater-Jastrow Variational Monte Carlo (VMC) simulation for the H2O molecule."
+name = "afterquery/diels-alder-ts-thermo"
+description = "Compute the Gibbs free energy of activation and reaction for the Diels-Alder reaction using M06-2X/def2-SVP and PySCF."
 authors = [{ name = "Jibril Suleiman Lere", email = "jibrilesslere@gmail.com" }]
-keywords = ["quantum Monte Carlo", "VMC", "Jastrow factor", "correlation energy", "water"]
+keywords = ["DFT", "thermochemistry", "transition state", "Diels-Alder", "PySCF"]
 
 [metadata]
 author_name = "Jibril Suleiman Lere"
@@ -18,15 +18,15 @@ referred_by = ""
 conflicts_of_interest = "None"
 domain = "physical-sciences"
 field = "chemistry"
-subfield = "electronic structure and quantum Monte Carlo"
+subfield = "computational chemistry"
 category = "Science"
 subcategory = "Chemistry"
-tags = ["quantum Monte Carlo", "VMC", "Jastrow factor", "correlation energy", "PyQMC"]
-expert_time_estimate_hours = 6.0
-relevant_experience = "Six years of electronic structure research with a focus on real-space quantum Monte Carlo methods; I develop and apply Slater-Jastrow trial wavefunctions and run VMC calculations for small molecules."
-difficulty_explanation = "The task requires the agent to set up a full QMC pipeline from scratch: run RHF, construct a Slater-Jastrow wavefunction, optimize the Jastrow parameters to recover correlation energy, and run a converged VMC simulation. The challenge lies in properly equilibrating the walkers, choosing sufficient sampling blocks, and ensuring the variational energy is strictly below the HF baseline without falling into statistical noise."
-solution_explanation = "Load the RHF checkpoint with PySCF. Build a Slater-Jastrow trial wavefunction using PyQMC's default two-body Jastrow. Optimize the Jastrow parameters. Run a converged VMC simulation with sufficient walkers and blocks. Compute the correlation energy as E_vmc - E_hf. Ensure the random seed is fixed for reproducibility."
-verification_explanation = "The verifier runs offline against a baked-in ground_truth.json. It checks the correlation energy within a tight tolerance derived from the statistical error of the reference run. It also enforces the variational bound, ensuring the agent's VMC energy is strictly lower than the HF energy, preventing trivial cheating."
+tags = ["DFT", "thermochemistry", "transition state", "Diels-Alder", "PySCF"]
+expert_time_estimate_hours = 12.0
+relevant_experience = "Extensive experience in computational chemistry, transition state searching, and thermochemical analysis using DFT."
+difficulty_explanation = "The difficulty comes from a chain of expert decisions where each mistake silently shifts the answer by several kcal/mol: landing on a higher-order saddle or a non-concerted path, skipping quasi-RRHO corrections, omitting the standard-state correction, referencing a complex instead of the separated reactants, or using the wrong butadiene conformer."
+solution_explanation = "Optimize the reactants and the cyclohexene product. Locate the concerted transition state and confirm it has exactly one imaginary frequency. Compute G(298.15 K) using Grimme’s quasi-RRHO treatment and calculate ΔG‡ and ΔG_rxn."
+verification_explanation = "The verifier checks ΔG‡ and ΔG_rxn within ±0.5 kcal/mol, the imaginary frequency within ±75 cm⁻¹, and the forming C-C distances within ±0.05 Å. It also independently recomputes the Hessian on the submitted TS geometry to ensure exactly one negative eigenvalue."
 
 [verifier]
 timeout_sec = 1800.0
