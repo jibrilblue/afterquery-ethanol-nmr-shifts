@@ -20,3 +20,5 @@ Write your results to `/app/output/vmc.json`. The JSON file must contain exactly
 - `hf_energy_hartree`: The baseline RHF energy.
 - `vmc_energy_hartree`: The optimized VMC energy.
 - `correlation_energy_hartree`: The difference between VMC and HF.
+
+- You have 14400 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.
