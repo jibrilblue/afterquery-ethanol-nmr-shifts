@@ -11,7 +11,7 @@ The agent is given only the reactant geometries (/app/data/butadiene.xyz, /app/d
 All numerical settings are pinned: PySCF and geomeTRIC versions, grid (99,590) without pruning, conv_tol=1e-10, no symmetry, GAU_TIGHT optimizer convergence.
 
 **Output format:**
-Write your results to `/app/output/kepler.json`. The JSON file must contain exactly these keys:
+Write your results to `/app/output/thermo.json`. The JSON file must contain exactly these keys:
 - `delta_G_activation_kcal_mol` (float)
 - `delta_G_reaction_kcal_mol` (float)
 - `imaginary_frequency_cm-1` (float)
