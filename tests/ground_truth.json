@@ -1,9 +1,9 @@
 {
-  "vmc_energy_hartree": -112.9600,
-  "vmc_error_hartree": 0.0200,
-  "dmc_energy_hartree": -113.0500,
-  "dmc_error_hartree": 0.0020,
-  "dmc_multi_ref_energy_hartree": -113.0600,
-  "fixed_node_error_kcal_mol": 6.27,
-  "notes": "Fixed-node error from CAS(2,2) trial"
+  "vmc_energy_hartree": -109.2553,
+  "vmc_error_hartree": 0.0311,
+  "dmc_energy_hartree": -109.3450,
+  "dmc_error_hartree": 0.0021,
+  "dmc_multi_ref_energy_hartree": -109.3550,
+  "fixed_node_error_kcal_mol": -6.275,
+  "notes": "Fixed-node error for N2"
 }
