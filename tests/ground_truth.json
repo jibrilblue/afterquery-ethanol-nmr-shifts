@@ -1,5 +1,6 @@
 {
-  "hf_energy_hartree": -76.02676567311755,
-  "vmc_energy_hartree": -76.06232670480362,
-  "correlation_energy_hartree": -0.03556103168607194
+  "delta_G_activation_kcal_mol": 26.45,
+  "delta_G_reaction_kcal_mol": -39.12,
+  "imaginary_frequency_cm-1": -512.3,
+  "forming_CC_distances_angstrom": [2.243, 2.245]
 }
