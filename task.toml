@@ -3,8 +3,8 @@ schema_version = "1.4"
 artifacts = ["/app/output/thermo.json"]
 
 [task]
-name = "afterquery/diels-alder-thermo"
-description = "Compute the Gibbs free energy of activation and reaction for the Diels-Alder reaction using M06-2X/def2-SVP and PySCF."
+name = "afterquery/isoprene-maleic-ts"
+description = "Compute the Gibbs free energy of activation and reaction for the endo Diels-Alder reaction of isoprene with maleic anhydride."
 authors = [{ name = "Jibril Suleiman Lere", email = "jibrilesslere@gmail.com" }]
 keywords = ["DFT", "thermochemistry", "transition state", "Diels-Alder", "PySCF"]
 
@@ -24,9 +24,9 @@ subcategory = "Chemistry"
 tags = ["DFT", "thermochemistry", "transition state", "Diels-Alder", "PySCF"]
 expert_time_estimate_hours = 12.0
 relevant_experience = "Extensive experience in computational chemistry, transition state searching, and thermochemical analysis using DFT."
-difficulty_explanation = "The difficulty comes from a chain of expert decisions where each mistake silently shifts the answer by several kcal/mol."
-solution_explanation = "Optimize the reactants and the cyclohexene product. Locate the concerted transition state and confirm it has exactly one imaginary frequency. Compute G(298.15 K) using Grimme’s quasi-RRHO treatment and calculate ΔG‡ and ΔG_rxn."
-verification_explanation = "The verifier checks ΔG‡ and ΔG_rxn within ±0.5 kcal/mol, the imaginary frequency within ±75 cm⁻¹, and the forming C-C distances within ±0.05 Å."
+difficulty_explanation = "The difficulty comes from a chain of expert decisions where each mistake silently shifts the answer by several kcal/mol: locating the correct endo TS vs exo, navigating the steric clash of the methyl group, skipping quasi-RRHO corrections, omitting the standard-state correction, or referencing a complex instead of the separated reactants."
+solution_explanation = "Optimize the reactants and product. Locate the endo TS and confirm it has exactly one imaginary frequency. Compute G(298.15 K) using Grimme’s quasi-RRHO treatment and calculate ΔG‡ and ΔG_rxn."
+verification_explanation = "The verifier physically recomputes the Hessian on the agent's submitted TS geometry, checks the endo projection, and verifies connectivity. It checks ΔG‡ and ΔG_rxn against reference values."
 
 [verifier]
 timeout_sec = 1800.0
