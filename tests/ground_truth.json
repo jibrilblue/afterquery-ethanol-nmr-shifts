@@ -1,6 +1,4 @@
 {
-  "delta_G_activation_kcal_mol": 26.45,
-  "delta_G_reaction_kcal_mol": -39.12,
-  "imaginary_frequency_cm-1": -512.3,
-  "forming_CC_distances_angstrom": [2.243, 2.245]
+  "h_shifts": [1.15, 3.65, 2.60],
+  "c_shifts": [18.2, 57.8]
 }
