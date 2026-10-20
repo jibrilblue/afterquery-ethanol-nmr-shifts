@@ -1,12 +1,12 @@
 schema_version = "1.4"
 
-artifacts = ["/app/output/thermo.json"]
+artifacts = ["/app/output/nmr.json"]
 
 [task]
-name = "afterquery/isoprene-maleic-ts"
-description = "Compute the Gibbs free energy of activation and reaction for the endo Diels-Alder reaction of isoprene with maleic anhydride."
+name = "afterquery/ethanol-nmr-shifts"
+description = "Calculate the 1H and 13C NMR chemical shifts for ethanol using GIAO-B3LYP."
 authors = [{ name = "Jibril Suleiman Lere", email = "jibrilesslere@gmail.com" }]
-keywords = ["DFT", "thermochemistry", "transition state", "Diels-Alder", "PySCF"]
+keywords = ["NMR", "GIAO", "chemical shifts", "DFT", "PySCF"]
 
 [metadata]
 author_name = "Jibril Suleiman Lere"
@@ -21,12 +21,12 @@ field = "chemistry"
 subfield = "computational chemistry"
 category = "Science"
 subcategory = "Chemistry"
-tags = ["DFT", "thermochemistry", "transition state", "Diels-Alder", "PySCF"]
-expert_time_estimate_hours = 12.0
-relevant_experience = "Extensive experience in computational chemistry, transition state searching, and thermochemical analysis using DFT."
-difficulty_explanation = "The difficulty comes from a chain of expert decisions where each mistake silently shifts the answer by several kcal/mol: locating the correct endo TS vs exo, navigating the steric clash of the methyl group, skipping quasi-RRHO corrections, omitting the standard-state correction, or referencing a complex instead of the separated reactants."
-solution_explanation = "Optimize the reactants and product. Locate the endo TS and confirm it has exactly one imaginary frequency. Compute G(298.15 K) using Grimme’s quasi-RRHO treatment and calculate ΔG‡ and ΔG_rxn."
-verification_explanation = "The verifier physically recomputes the Hessian on the agent's submitted TS geometry, checks the endo projection, and verifies connectivity. It checks ΔG‡ and ΔG_rxn against reference values."
+tags = ["NMR", "GIAO", "DFT", "PySCF"]
+expert_time_estimate_hours = 4.0
+relevant_experience = "Extensive experience in computational chemistry and magnetic resonance property calculations using DFT."
+difficulty_explanation = "The task requires setting up GIAO NMR calculations for both the target molecule and the TMS reference standard, and correctly extracting and referencing the isotropic shielding tensors to obtain chemical shifts."
+solution_explanation = "Optimize the geometries of ethanol and TMS. Run GIAO-B3LYP calculations to get isotropic shielding tensors. Calculate the shifts as sigma_TMS - sigma_sample."
+verification_explanation = "The verifier checks the chemical shifts against reference values with a strict tolerance."
 
 [verifier]
 timeout_sec = 1800.0
